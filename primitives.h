@@ -1,3 +1,7 @@
+// Primitives header file that declares the primitives supported in the ray tracer
+// Author: Sasidharan Mahalingam
+// Date Created: 1 Dec 2023
+
 #ifndef PRIMITIVES_H
 #define PRIMITIVES_H
 
@@ -5,12 +9,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <algorithm>
 
-using namespace glm;
+typedef glm::mat3 mat3;
+typedef glm::mat4 mat4;
+typedef glm::vec3 vec3;
+typedef glm::vec4 vec4;
 typedef unsigned char BYTE;
 
 extern const float eps;
 int sgn(float x);
-bool IsSameVector(const vec3& a, const vec3& b);
+bool isSameVector(const vec3& a, const vec3& b);
 
 struct Ray
 {
@@ -51,7 +58,7 @@ class Primitive
 {
 public:
 	mat4 transform; 
-  	mat4 InversedTransform;
+  	mat4 inversedtransform;
   	Materials materials;	
     
     int index; // Identify the object for debugging.
@@ -61,8 +68,8 @@ public:
     
 	Object();
 	virtual ~Object();
-	virtual bool Intersect(const Ray& ray, float* dis_to_ray) const = 0;
-	virtual vec3 InterpolatePointNormal(const vec3& point) const = 0;
+	virtual bool intersect(const Ray& ray, float* dis_to_ray) const = 0;
+	virtual vec3 interpolatePointNormal(const vec3& point) const = 0;
 
 };
 
@@ -72,11 +79,11 @@ class Sphere : public Primitive
 public:
 	Svec3 o;
 	float r;
-	Sphere(const vec3& _o, const float& _r);
+	Sphere(const vec3& o_, const float& r_);
 	
 	virtual ~Sphere();
-	virtual bool Intersect(const Ray& ray, float* dis_to_ray) const;
-	virtual vec3 InterpolatePointNormal(const vec3& point) const;
+	virtual bool intersect(const Ray& ray, float* dis_to_ray) const;
+	virtual vec3 interpolatePointNormal(const vec3& point) const;
 }
 
 class Triangle : public Primitive
@@ -86,11 +93,11 @@ public:
     vec3 &a, &b, &c;
     vec3 &na, &nb, &nc;
     
-	Triangle(const vec3& _a, const vec3& _b, const vec3& _c, vec3 na = vec3(0,0,0), vec3 nb = vec3(0,0,0), vec3 nc = vec3(0,0,0));
+	Triangle(const vec3& a_, const vec3& b_, const vec3& c_, vec3 na = vec3(0,0,0), vec3 nb = vec3(0,0,0), vec3 nc = vec3(0,0,0));
     
     virtual ~Triangle();
-    virtual bool Intersect(const Ray& ray, float* dis_to_ray) const;
-    virtual vec3 InterpolatePointNormal(const vec3& point) const;
+    virtual bool intersect(const Ray& ray, float* dis_to_ray) const;
+    virtual vec3 interpolatePointNormal(const vec3& point) const;
 }
 
 #endif

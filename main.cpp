@@ -10,14 +10,13 @@
 
 #include "Transform.h"
 #include <FreeImage.h>
+#include <stdio.h>
+#include <cassert>
 
+#include "scene.h"
 
 using namespace std;
  
-// Main variables in the program.  
-#define MAINPROGRAM 
-#include "variables.h" 
-#include "readfile.h"
 
 int main(int argc, char* argv[]) {
 
@@ -28,7 +27,9 @@ int main(int argc, char* argv[]) {
 
   FreeImage_Initialise();
 
-  readfile(argv[1]) ; 
+  Scene scene;
+  scene.outputfile = "result.png";
+  scene.readfile(argv[1]); 
 
   FreeImage_DeInitialise();
 

@@ -8,9 +8,16 @@
 #define EXTERN extern 
 #endif
 
-EXTERN int amount; // The amount of rotation for each arrow press
-EXTERN vec3 eye; // The (regularly updated) vector coordinates of the eye 
-EXTERN vec3 up;  // The (regularly updated) vector coordinates of the up 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <vector>
+#include "primitives.h"
+
+typedef glm::mat3 mat3;
+typedef glm::mat4 mat4;
+typedef glm::vec3 vec3;
+typedef glm::vec4 vec4;
+
 
 #ifdef MAINPROGRAM 
 vec3 eyeinit(0.0,0.0,5.0) ; // Initial eye position, also for resets
